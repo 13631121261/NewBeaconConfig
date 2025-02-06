@@ -1,0 +1,306 @@
+<resources>
+
+    <string name="app_name1">AOA Config</string>
+    <string name="startScan">Start Scan</string>
+    <string name="stopScan">Stop Scan</string>
+    <string name="disconnect">DisConnect</string>
+    <string name="connect">Connect</string>
+    <string name="redyconnect">Connect</string>
+    <string name="noSupportBle">This phone does not support low power Bluetooth, please use Android system 5.0 or above mobile phone</string>
+    <string name="noGps">Mobile phone location has been turned off</string>
+    <string name="noBle">Bluetooth has been turned off</string>
+    <string name="tip">Please turn on Bluetooth and GPS</string>
+    <string name="open">Open</string>
+    <string name="filter_name_mac">Filter the name or MAC </string>
+    <string name="filter_advertising_data">Filter raw broadcast data</string>
+    <string name="filter_major">Filter Major</string>
+    <string name="filter_minor">Filter Minor</string>
+    <string name="filter_tip">Set filtering rules</string>
+    <string name="no_device">There is no device that meets the criteria</string>
+    <string name="reConnect">ReConnect</string>
+    <string name="disConnect">DisConnect</string>
+    <string name="temp_str">Temperature and humidity detection interval</string>
+    <string name="interval_str">Automatically adjust broadcast interval</string>
+    <string name="isOpen">is open</string>
+    <string name="isClose">is close</string>
+
+    <string name="enter_password">Enter Password</string>
+    <string name="openOrclose">Turn On or Off:</string>
+    <string name="send">Send</string>
+    <string name="passwords">Password</string>
+    <string name="password_error">The password is incorrect. Please re-enter it.</string>
+    <string name="tip_password">Please enter a password of at least 4 characters</string>
+    <string name="tip_nam">Please enter an English name of 1-16 characters</string>
+    <string name="tip_uuid">Please enter 16 bytes of UUID content</string>
+    <string name="tip_customer">Please enter 1-12 bytes of custom tag</string>
+    <string name="tip_number">Please enter values within 1-65535</string>
+    <string name="tip_update_time"> Seconds update</string>
+    <string name="tip_close_sensor">Turn off the temperature and humidity sensor</string>
+    <string name="tip_close_acc_sensor">Acceleration detection is not enabled</string>
+    <string name="tip_update_time_min"> Millisecond broadcast</string>
+    <string name="tip_mac_edit">MAC address are not editable</string>
+
+    <string name="uid_tip">Please output the correct data length</string>
+    <string name="change_mode">Switch Mode</string>
+    <string name="version">Firmware Version</string>
+    <string name="connect_ok">Password Correct</string>
+    <string name="connect_passwordError">Bad password, Disconnect</string>
+    <string name="change_name_OK">Set Device Name Successfully</string>
+    <string name="change_name_fail">Failed to set Device Name</string>
+
+    <string name="change_uuid_ok">Set UUID Successfully</string>
+
+    <string name="change_uuid_fail">Failed to set UUID</string>
+    <string name="change_customer_ok">Set Custom Data Successfully</string>
+
+    <string name="change_customer_fail">Failed to set Custom Data</string>
+
+    <string name="change_major_ok"> Set Major Successfully</string>
+
+    <string name="change_major_fail"> Failed to set Major</string>
+
+    <string name="change_minor_ok">Set Minor Successfully</string>
+
+    <string name="change_minor_fail">Failed to set Minor</string>
+
+
+    <string name="change_txpower_ok">Set Transmitting Power Successfully</string>
+
+    <string name="change_txpower_fail">Failed to set Transmitting Power</string>
+    <string name="change_adv">Set Broadcast Interval Successfully</string>
+    <string name="change_rssi">Set RSSI at 1m Successfully</string>
+    <string name="change_ok">Successful</string>
+    <string name="data_error">Wrong data format</string>
+    <string name="change_fail">Failed</string>
+
+    <string name="pop_adv"> Enables dynamic broadcast intervals</string>
+    <string name="pop_temp"> Timely access to temperature and humidity</string>
+
+    <string name="change_password">Change Password</string>
+    <string name="check_password">Enter Password</string>
+    <string name="setName">Name</string>
+    <string name="setUUID">UUID</string>
+    <string name="setCustomer">Customer Data</string>
+    <string name="setMinor">Minor</string>
+    <string name="setMajor">Major</string>
+    <string name="setTxPower">Tx Power</string>
+    <string name="setRssiAt1m">RSSI at 1m</string>
+    <string name="setAdv">Broadcast Interval</string>
+    <string name="bt">Battery Level:</string>
+    <string name="wendu">Temperature:</string>
+    <string name="shidu">Humidity:</string>
+    <string-array name="spinner_dbm">
+        <item>4 dBm</item>
+        <item>0 dBm</item>
+        <item>-4 dBm</item>
+        <item>-8 dBm</item>
+        <item>-12 dBm</item>
+        <item>-16 dBm</item>
+        <item>-20 dBm</item>
+        <item>-40 dBm</item>
+    </string-array>
+    <string-array name="eddystone_url_head">
+        <item>http://www.</item>
+        <item>https://www.</item>
+        <item>http://</item>
+        <item>https://</item>
+    </string-array>
+
+
+    <string-array name="spinner_txpowerat0m">
+        <item>-10</item>
+        <item>-11</item>
+        <item>-12</item>
+        <item>-13</item>
+        <item>-14</item>
+        <item>-15</item>
+        <item>-16</item>
+        <item>-17</item>
+        <item>-18</item>
+        <item>-19</item>
+        <item>-20</item>
+        <item>-21</item>
+        <item>-22</item>
+        <item>-23</item>
+        <item>-24</item>
+        <item>-25</item>
+        <item>-26</item>
+        <item>-27</item>
+        <item>-28</item>
+        <item>-29</item>
+        <item>-30</item>
+        <item>-31</item>
+        <item>-32</item>
+        <item>-33</item>
+        <item>-34</item>
+        <item>-35</item>
+        <item>-36</item>
+        <item>-37</item>
+        <item>-38</item>
+        <item>-39</item>
+        <item>-40</item>
+        <item>-41</item>
+        <item>-42</item>
+        <item>-43</item>
+        <item>-44</item>
+        <item>-45</item>
+        <item>-46</item>
+        <item>-47</item>
+        <item>-48</item>
+        <item>-49</item>
+        <item>-50</item>
+        <item>-51</item>
+        <item>-52</item>
+        <item>-53</item>
+        <item>-54</item>
+        <item>-55</item>
+        <item>-56</item>
+        <item>-57</item>
+        <item>-58</item>
+        <item>-59</item>
+        <item>-60</item>
+    </string-array>
+    <string-array name="spinner_url_end">
+        <item>no suffix</item>
+        <item>.com/</item>
+        <item>.org/</item>
+        <item>.edu/</item>
+        <item>.net/</item>
+        <item>.info/</item>
+        <item>.biz/</item>
+        <item>.gov/</item>
+        <item>.com</item>
+        <item>.org</item>
+        <item>.edu</item>
+        <item>.net</item>
+        <item>.info</item>
+        <item>.biz</item>
+        <item>.gov</item>
+    </string-array>
+
+    <string-array name="spinner_measure">
+        <item>-30</item>
+        <item>-31</item>
+        <item>-32</item>
+        <item>-33</item>
+        <item>-34</item>
+        <item>-35</item>
+        <item>-36</item>
+        <item>-37</item>
+        <item>-38</item>
+        <item>-39</item>
+        <item>-40</item>
+        <item>-41</item>
+        <item>-42</item>
+        <item>-43</item>
+        <item>-44</item>
+        <item>-45</item>
+        <item>-46</item>
+        <item>-47</item>
+        <item>-48</item>
+        <item>-49</item>
+        <item>-50</item>
+        <item>-51</item>
+        <item>-52</item>
+        <item>-53</item>
+        <item>-54</item>
+        <item>-55</item>
+        <item>-56</item>
+        <item>-57</item>
+        <item>-58</item>
+        <item>-59</item>
+        <item>-60</item>
+        <item>-61</item>
+        <item>-62</item>
+        <item>-63</item>
+        <item>-64</item>
+        <item>-65</item>
+        <item>-66</item>
+        <item>-67</item>
+        <item>-68</item>
+        <item>-69</item>
+        <item>-70</item>
+        <item>-71</item>
+        <item>-72</item>
+        <item>-73</item>
+        <item>-74</item>
+        <item>-75</item>
+        <item>-76</item>
+        <item>-77</item>
+        <item>-78</item>
+        <item>-79</item>
+        <item>-80</item>
+        <item>-81</item>
+        <item>-82</item>
+        <item>-83</item>
+        <item>-84</item>
+        <item>-85</item>
+        <item>-86</item>
+        <item>-87</item>
+        <item>-88</item>
+        <item>-89</item>
+        <item>-90</item>
+        <item>-91</item>
+        <item>-92</item>
+        <item>-93</item>
+        <item>-94</item>
+        <item>-95</item>
+        <item>-96</item>
+        <item>-97</item>
+        <item>-98</item>
+        <item>-99</item>
+        <item>-100</item>
+
+
+    </string-array>
+    <string-array name="spinner_adv">
+        <item>20 ms</item>
+        <item>30 ms</item>
+        <item>50 ms</item>
+        <item>100 ms</item>
+        <item>200 ms</item>
+        <item>300 ms</item>
+        <item>400 ms</item>
+        <item>500 ms</item>
+        <item>600 ms</item>
+        <item>700 ms</item>
+        <item>800 ms</item>
+        <item>900 ms</item>
+        <item>1000 ms</item>
+    </string-array>
+    <string-array name="spinner_adv_0nterval">
+
+        <item>100 ms</item>
+        <item>200 ms</item>
+        <item>300 ms</item>
+        <item>400 ms</item>
+        <item>500 ms</item>
+        <item>600 ms</item>
+        <item>700 ms</item>
+        <item>800 ms</item>
+        <item>900 ms</item>
+        <item>1000 ms</item>
+        <item>1500 ms</item>
+        <item>2000 ms</item>
+        <item>2500 ms</item>
+        <item>3000 ms</item>
+        <item>5000 ms</item>
+        <item>10000 ms</item>
+
+    </string-array>
+
+    <string-array name="spinner_check">
+        <item>3 Seconds</item>
+        <item>5 Seconds</item>
+        <item>10 Seconds</item>
+        <item>15 Seconds</item>
+        <item>30 Seconds</item>
+        <item>50 Seconds</item>
+        <item>100 Seconds</item>
+        <item>200 Seconds</item>
+        <item>300 Seconds</item>
+    </string-array>
+    <string name="title_activity_uid">UidActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+</resources>

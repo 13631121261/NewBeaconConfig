@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#dddddd"
+    android:orientation="vertical"
+    tools:context="com.ble.activity.MainActivity">
+    <LinearLayout
+        android:id="@+id/linear_filter"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#5e78f9"
+
+        >
+
+        <RelativeLayout
+            android:id="@+id/relat_target"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_taitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="@string/beacon_target"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/txt_completed_coount"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/ima_scan_target"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:text="@string/config_count"
+                android:textColor="#ffffff" />
+            <ImageView
+                android:id="@+id/ima_scan_target"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/scann"
+                >
+
+            </ImageView>
+        </RelativeLayout>
+
+
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5px"
+            android:background="#000000"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linear_target"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/txt_uuid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="UUID:"></TextView>
+
+        <EditText
+            android:id="@+id/ed_uuid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:hint="uuid value" />
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/txt_major"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Major:"></TextView>
+
+        <EditText
+            android:id="@+id/ed_major"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_toRightOf="@id/txt_major"
+            android:hint="major value" />
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:id="@+id/txt_minor"
+            android:layout_toRightOf="@id/ed_major"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Minor:"></TextView>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ed_minor"
+            android:layout_toRightOf="@id/txt_minor"
+            android:hint="major value" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/txt_txPower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Tx Power:"></TextView>
+
+        <Spinner
+            android:background="@drawable/shape"
+            android:id="@+id/sp_txpower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:entries="@array/spinner_dbm"
+            android:layout_toRightOf="@id/txt_txPower"
+            android:hint="uuid value" />
+
+        <TextView
+            android:id="@+id/txt_intervaal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/sp_txpower"
+            android:text="@string/interval"></TextView>
+
+        <Spinner
+            android:id="@+id/sp_interval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/shape"
+            android:entries="@array/spinner_adv_0nterval"
+            android:layout_toRightOf="@id/txt_intervaal"
+            android:hint="uuid value" />
+    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="50dp">
+            <TextView
+                android:id="@+id/txt_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Password:"></TextView>
+
+            <EditText
+                android:id="@+id/ed_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_toRightOf="@id/txt_password"
+                android:hint="password" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

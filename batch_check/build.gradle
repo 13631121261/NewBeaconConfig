@@ -1,0 +1,109 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+android {
+
+    namespace 'com.ble.beaconcheck'
+    compileSdk 34
+    viewBinding {
+        enabled = true
+    }
+    defaultConfig {
+        applicationId "com.ble.beaconcheck"
+        minSdk 21
+        targetSdk 34
+        versionCode 10
+        versionName "1.10"
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a', 'arm64-v8a' //select ABIs to build APKs for
+            universalApk true //generate an additional APK that contains all the ABIs
+        }
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+
+
+
+
+
+
+/*
+    implementation 'no.nordicsemi.android:ble-common:2.2.4'
+  //  implementation 'com.yanzhenjie:permission:2.0.3'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    //  //后续打包成lib时，可以删除依赖
+   // implementation 'pub.devrel:easypermissions:2.0.1'
+    implementation 'no.nordicsemi.android.support.v18:scanner:1.4.2'*/
+
+
+
+
+
+
+
+
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation "io.reactivex.rxjava3:rxjava:3.0.0"
+    implementation files('libs\\dom4j-1.6.1.jar')
+    implementation files('libs/poi-ooxml-schemas-3.12-20150511-a.jar')
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation 'no.nordicsemi.android.support.v18:scanner:1.4.2'
+    implementation 'com.github.tbruyelle:rxpermissions:0.12'
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+    implementation 'no.nordicsemi.android:ble-common:2.2.4'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    implementation 'com.github.EthanCo:QrCodeScanUI:v1.0.0'
+    implementation 'com.huawei.hms:scanplus:2.6.0.301'
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.7.0"
+   implementation 'pub.devrel:easypermissions:3.0.0'
+ //   implementation 'pub.devrel:easypermissions:2.0.1'
+}
+
+

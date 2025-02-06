@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape"
+    android:orientation="vertical"
+    tools:context="com.ble.activity.UidActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Encryped:"></TextView>
+            <EditText
+                android:id="@+id/ed_eid"
+                android:hint="8 Byte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </EditText>
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TX Power at 0M:"></TextView>
+        <Spinner
+            android:layout_width="wrap_content"
+            android:id="@+id/sp_eid_txpower"
+            android:entries="@array/spinner_txpowerat0m"
+            android:layout_height="wrap_content"></Spinner>
+    </LinearLayout>
+    <Button
+        android:layout_gravity="center_horizontal"
+        android:onClick="onClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/send"></Button>
+
+</LinearLayout>

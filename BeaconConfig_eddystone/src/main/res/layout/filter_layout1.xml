@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+  <LinearLayout
+        android:id="@+id/linear_FilterDetail"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+         android:clipToPadding="false"
+         android:paddingTop="?attr/actionBarSize"
+        android:background="#dddddd"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            >
+            <ImageView
+                android:id="@+id/ima_name"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/search"/>
+            <EditText
+                android:id="@+id/ed_nameFilter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:hint="@string/filter_name_mac"/>
+
+            <ImageView
+                android:id="@+id/ima_nameClose"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+
+                android:src="@mipmap/close" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            >
+            <ImageView
+                android:id="@+id/ima_adv"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/search"/>
+            <TextView
+                android:id="@+id/nll"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ima_adv"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="0x"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ed_rawFilter"
+                android:layout_toRightOf="@id/nll"
+                android:layout_marginRight="50dp"
+                android:hint="@string/filter_advertising_data"/>
+            <ImageView
+                android:id="@+id/ima_rawClose"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentEnd="true"
+
+                android:src="@mipmap/close"/>
+
+        </RelativeLayout>
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="60dp"
+          >
+          <ImageView
+              android:id="@+id/ima_adva"
+              android:layout_width="20dp"
+              android:layout_height="20dp"
+              android:layout_centerVertical="true"
+              android:layout_marginLeft="10dp"
+              android:src="@mipmap/search"/>
+
+          <EditText
+              android:layout_width="150dp"
+              android:layout_height="match_parent"
+              android:id="@+id/ed_major"
+
+              android:layout_toEndOf="@id/ima_adva"
+              android:layout_marginLeft="10dp"
+              android:hint="@string/filter_major"/>
+          <EditText
+              android:layout_width="150dp"
+              android:layout_height="match_parent"
+              android:id="@+id/ed_minor"
+
+
+              android:layout_toEndOf="@id/ed_major"
+              android:hint="@string/filter_minor"/>
+          <ImageView
+              android:id="@+id/ima_mClose"
+              android:layout_width="15dp"
+              android:layout_height="15dp"
+
+              android:layout_centerVertical="true"
+              android:layout_marginRight="20dp"
+              android:layout_alignParentEnd="true"
+
+              android:src="@mipmap/close"/>
+
+      </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            >
+            <ImageView
+                android:id="@+id/ima_rssi"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/rssi"/>
+            <SeekBar
+                android:id="@+id/rssi_seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="50dp"
+                android:progress="100"
+                android:max="100"
+                android:min="40"
+                android:layout_marginRight="50dp"
+                />
+            <ImageView
+                android:id="@+id/ima_rssiClose"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentEnd="true"
+                android:src="@mipmap/close"/>
+
+
+
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5px"
+            android:background="#000000"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_filter"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#5e78f9"
+
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="@string/filter_tip"
+                android:textColor="#ffffff" />
+            <ImageView
+                android:id="@+id/ima_scan"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/scann"
+                >
+
+            </ImageView>
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5px"
+            android:background="#000000"/>
+    </LinearLayout>
+
+
+
+</FrameLayout>
+
+
+
+

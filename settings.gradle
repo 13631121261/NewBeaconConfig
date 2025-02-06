@@ -1,0 +1,25 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url 'https://jitpack.io' }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven {url 'https://jitpack.io' }
+        maven {url 'https://developer.huawei.com/repo/'}  //添加代码
+    }
+}
+rootProject.name = "NewBeaconConfig"
+include ':app'
+include ':BeaconConfig_eddystone'
+include ':BeaconConfig_eddystone_new'
+include ':batch_config'
+include ':batch_check'
+include ':AoA_Config'
+

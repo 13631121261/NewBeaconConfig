@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="#4ae6e4"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+
+        android:background="#4acee6"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content">
+<ImageView
+    android:id="@+id/logo"
+    android:layout_marginLeft="10dp"
+    android:layout_centerVertical="true"
+    android:layout_width="35dp"
+    android:layout_height="35dp"
+    android:src="@mipmap/logo1"
+    />
+
+        <TextView
+            android:id="@+id/device_name"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/logo"
+
+            android:text="TextView"
+
+      />
+
+        <TextView
+            android:id="@+id/mac_address"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/device_name"
+
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/logo"
+            android:text="TextView" />
+
+
+        <ImageView
+            android:id="@+id/ima_rssi"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/device_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/mac_address"
+            android:src="@mipmap/rssi" />
+
+        <TextView
+            android:id="@+id/txt_rssi"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/device_name"
+        android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/ima_rssi"
+            android:text="-90dBm" />
+
+
+        <ImageView
+            android:id="@+id/ima_interval"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/mac_address"
+            android:src="@mipmap/interval" />
+
+        <TextView
+            android:id="@+id/txt_intervaal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+
+            android:layout_toRightOf="@id/ima_interval"
+            android:text="100 ms" />
+
+        <TextView
+            android:id="@+id/btn_connect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:text="@string/finish"
+
+            tools:ignore="RtlHardcoded" />
+
+        <ImageView
+            android:id="@+id/imageViewaa"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:visibility="gone"
+            android:layout_below="@+id/mac_address"
+            android:layout_toRightOf="@id/aminor"
+            app:srcCompat="@mipmap/start" />
+
+        <TextView
+
+            android:layout_marginLeft="5dp"
+            android:id="@+id/amajor"
+            android:layout_width="100dp"
+            android:layout_toRightOf="@id/logo"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/mac_address"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/aminor"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mac_address"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/amajor"
+            android:text="-90dBm" />
+
+        <TextView
+            android:id="@+id/auuid"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/logo"
+            android:layout_below="@+id/amajor"
+            android:text="-90dBm" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:background="#4ae6e4"
+        android:clipToPadding="false"
+       android:id="@+id/ralate_detail"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/txtcompany"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Company Id:"
+            android:textStyle="bold" />
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/txt_companyId"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Company Id:"
+            android:textStyle="bold"
+
+            android:layout_toRightOf="@id/txtcompany"
+            />
+
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/txtType"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type:"
+            android:layout_below="@id/txtcompany"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:visibility="gone"
+            android:layout_alignBottom="@id/txtType"
+            android:id="@+id/txt_Type"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Beacon 0x02"
+            android:textStyle="bold"
+            android:layout_toRightOf="@id/txtType"
+            />
+
+
+        <TextView
+            android:id="@+id/txtUUID"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UUID:"
+            android:layout_below="@id/txtType"
+
+            />
+        <TextView
+
+            android:id="@+id/txt_UUID"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ewuireruwituijfkd1sfdfdf54545646546545545456465454654654564545"
+            android:layout_alignBottom="@id/txtUUID"
+            android:layout_toRightOf="@id/txtUUID"
+            />
+
+        <TextView
+            android:id="@+id/txtMajor"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Major:"
+            android:layout_below="@id/txt_UUID"
+
+            />
+        <TextView
+
+            android:id="@+id/txt_Major"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ewuireruwituijfkd"
+
+
+            android:layout_alignBottom="@id/txtMajor"
+
+            android:layout_toRightOf="@id/txtMajor"
+            />
+
+
+
+        <TextView
+            android:id="@+id/txtMinor"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Minor:"
+            android:layout_below="@id/txtMajor"
+
+            />
+        <TextView
+            android:layout_below="@id/txt_Major"
+            android:id="@+id/txt_Minor"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ewuireruwituijfkd"
+
+            android:layout_toRightOf="@id/txtMinor"
+            />
+
+
+        <TextView
+            android:id="@+id/txtRssiAtOne"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RSSI at 1M:"
+            android:layout_below="@id/txtMinor"
+
+            />
+        <TextView
+            android:layout_below="@id/txt_Minor"
+            android:id="@+id/txt_rssiAtOne"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-61 dBm"
+
+            android:layout_toRightOf="@id/txtRssiAtOne"
+            />
+
+
+        <TextView
+            android:id="@+id/txtTxPower"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tx Power Level:"
+            android:layout_below="@id/txtRssiAtOne"
+            />
+        <TextView
+            android:layout_below="@id/txt_rssiAtOne"
+            android:id="@+id/txt_txpower"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-61 dBm"
+
+            android:layout_toRightOf="@id/txtTxPower"
+            />
+
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/txtServerData"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Server tag:"
+            android:layout_below="@id/txtTxPower"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:visibility="gone"
+            android:layout_below="@id/txt_txpower"
+            android:id="@+id/txt_ServerData"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-61 dBm"
+            android:textStyle="bold"
+            android:layout_toRightOf="@id/txtServerData"
+            />
+        <TextView
+            android:id="@+id/txt_temp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wendu"
+            android:layout_below="@id/txtServerData"
+            />
+        <TextView
+            android:layout_below="@id/txt_ServerData"
+            android:id="@+id/txt_temps"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="29.0"
+
+            android:layout_toRightOf="@id/txt_temp"
+            />
+
+
+
+
+        <TextView
+            android:id="@+id/txt_shidu"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/shidu"
+            android:layout_toRightOf="@id/txt_temps"
+            android:layout_below="@id/txtServerData"
+
+            />
+        <TextView
+            android:layout_below="@id/txt_ServerData"
+            android:id="@+id/txt_shidus"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="58%"
+
+            android:layout_toRightOf="@id/txt_shidu"
+            />
+
+
+
+
+        <TextView
+            android:visibility="visible"
+            android:id="@+id/txt_bts"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bt"
+            android:layout_below="@id/txt_temp"
+
+            />
+        <TextView
+            android:visibility="visible"
+            android:layout_below="@id/txt_temp"
+            android:id="@+id/txt_bbt"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50%"
+
+            android:layout_toRightOf="@id/txt_bts"
+            />
+        <TextView
+            android:visibility="visible"
+            android:id="@+id/txt_uid_n"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UID NameSpace:"
+            android:layout_below="@id/txt_bts"
+
+            />
+        <TextView
+            android:visibility="visible"
+            android:layout_below="@id/txt_bts"
+            android:id="@+id/txt_uid_NameSpace"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50%"
+            android:layout_toRightOf="@id/txt_uid_n"
+            />
+
+
+        <TextView
+            android:visibility="visible"
+            android:id="@+id/txt_uid_i"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UID Instance:"
+            android:layout_below="@id/txt_uid_n"
+            />
+        <TextView
+            android:visibility="visible"
+            android:layout_below="@id/txt_uid_n"
+            android:id="@+id/txt_uid_instance"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50%"
+            android:layout_toRightOf="@id/txt_uid_i"
+            />
+
+
+
+        <TextView
+            android:visibility="visible"
+            android:id="@+id/txt_txpower_0"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tx Power at 0M:"
+            android:layout_below="@id/txt_uid_i"
+            />
+        <TextView
+            android:visibility="visible"
+            android:layout_below="@id/txt_uid_i"
+            android:id="@+id/txt_txpower_0m"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50%"
+            android:layout_toRightOf="@id/txt_txpower_0"
+            />
+
+
+        <TextView
+            android:visibility="visible"
+            android:id="@+id/txt_url"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="URL:"
+            android:layout_below="@id/txt_txpower_0"
+            />
+        <TextView
+            android:visibility="visible"
+            android:layout_below="@id/txt_txpower_0"
+            android:id="@+id/txt_url_data"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50%"
+            android:layout_toRightOf="@id/txt_url"
+            />
+
+
+        <TextView
+            android:visibility="visible"
+            android:id="@+id/txt_eid"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Encrypted ID:"
+            android:layout_below="@id/txt_url"
+            />
+        <TextView
+            android:visibility="visible"
+            android:layout_below="@id/txt_url"
+            android:id="@+id/txt_eid_data"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50%"
+            android:layout_toRightOf="@id/txt_eid"
+            />
+
+        <TextView
+            android:visibility="visible"
+            android:id="@+id/txt_tlm_on"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Encrypted telemetry data:"
+            android:layout_below="@id/txt_eid_data"
+            />
+        <TextView
+            android:visibility="visible"
+            android:layout_below="@id/txt_eid_data"
+            android:id="@+id/txt_tlm_on_data"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50%"
+            android:layout_toRightOf="@id/txt_tlm_on"
+            />
+
+
+
+
+
+
+
+
+
+
+
+        <TextView
+            android:visibility="visible"
+            android:id="@+id/txt_tlm_bt"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Battery Voltage:"
+            android:layout_below="@id/txt_tlm_on_data"
+            />
+        <TextView
+            android:visibility="visible"
+            android:layout_below="@id/txt_tlm_on_data"
+            android:id="@+id/txt_tlm_bt_data"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50%"
+            android:layout_toRightOf="@id/txt_tlm_bt"
+            />
+
+
+        <TextView
+            android:visibility="visible"
+            android:id="@+id/txt_tlm_wendu"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Temperature:"
+            android:layout_below="@id/txt_tlm_bt_data"
+            />
+        <TextView
+            android:visibility="visible"
+            android:layout_below="@id/txt_tlm_bt_data"
+            android:id="@+id/txt_tlm_wendu_data"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50%"
+            android:layout_toRightOf="@id/txt_tlm_wendu"
+            />
+
+
+
+
+        <TextView
+            android:visibility="visible"
+            android:id="@+id/txt_tlm_pdu"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Advertisments count:"
+            android:layout_below="@id/txt_tlm_wendu"
+            />
+        <TextView
+            android:visibility="visible"
+            android:layout_below="@id/txt_tlm_wendu"
+            android:id="@+id/txt_tlm_pdu_data"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50%"
+            android:layout_toRightOf="@id/txt_tlm_pdu"
+            />
+
+        <TextView
+            android:id="@+id/txt_tlm_run"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_tlm_pdu_data"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Time since power-up:"
+            android:visibility="visible" />
+        <TextView
+            android:visibility="visible"
+            android:layout_below="@id/txt_tlm_pdu_data"
+            android:id="@+id/txt_tlm_run_count"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50%"
+            android:layout_toRightOf="@id/txt_tlm_run"
+            />
+
+
+
+        <TextView
+            android:visibility="visible"
+            android:id="@+id/txt_tlm_on_salt"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Salt:"
+            android:layout_below="@id/txt_tlm_run_count"
+            />
+        <TextView
+            android:visibility="visible"
+            android:layout_below="@id/txt_tlm_run_count"
+            android:id="@+id/txt_tlm_on_salt_data"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50%"
+            android:layout_toRightOf="@id/txt_tlm_on_salt"
+            />
+
+        <TextView
+            android:visibility="visible"
+            android:id="@+id/txt_tlm_on_mic"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Message Integrity Check:"
+            android:layout_below="@id/txt_tlm_on_salt_data"
+            />
+        <TextView
+            android:visibility="visible"
+            android:layout_below="@id/txt_tlm_on_salt_data"
+            android:id="@+id/txt_tlm_on_mic_data"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50%"
+            android:layout_toRightOf="@id/txt_tlm_on_mic"
+            />
+
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5px"
+        android:background="#000000"/>
+</LinearLayout>

@@ -1,0 +1,278 @@
+<resources>
+
+    <string name="app_name1">批量配置</string>
+    <string name="startScan">开始配置</string>
+    <string name="stopScan">停止配置</string>
+    <string name="disconnect">断开连接</string>
+    <string name="connect">开始连接</string>
+    <string name="redyconnect">Connect</string>
+    <string name="noSupportBle">该手机不支持低功耗蓝牙，请使用安卓系统为5.0以上手机</string>
+    <string name="noGps">手机定位已关闭</string>
+    <string name="noBle">手机蓝牙已关闭</string>
+    <string name="tip">请打开手机蓝牙和Gps</string>
+    <string name="open">打开</string>
+    <string name="filter_name_mac">过滤名称或者MAC地址</string>
+    <string name="filter_advertising_data">过滤原始广播数据</string>
+    <string name="filter_tip">目标文件</string>
+    <string name="scan_count">扫描总数</string>
+    <string name="target_count">目标总数:</string>
+    <string name="config_count">完成总数：</string>
+    <string name="beacon_target">设置目标参数</string>
+    <string name="no_device">没有符合条件的设备</string>
+    <string name="reConnect">重新连接</string>
+    <string name="disConnect">断开连接</string>
+    <string name="temp_str">温湿度检测间隔</string>
+    <string name="interval_str">自动调节广播间隔</string>
+    <string name="interval">广播间隔</string>
+    <string name="isOpen">已打开</string>
+    <string name="isClose">已关闭</string>
+    <string name="uid_tip">请输出正确的数据长度</string>
+    <string name="enter_password">输入密码</string>
+    <string name="openOrclose">打开或关闭：</string>
+    <string name="send">发 送</string>
+    <string name="passwords">密码</string>
+    <string name="password_error">密码不正确,请重新输入.</string>
+    <string name="tip_password">请输入不小于4位密码</string>
+    <string name="tip_nam">请输入1-16个字符的英文名称</string>
+    <string name="tip_uuid">请输入16个字节UUID内容</string>
+    <string name="tip_customer">请输入1-12个字节自定义数据</string>
+    <string name="tip_number">请输入0-65535以内数值</string>
+    <string name="tip_update_time">秒更新</string>
+    <string name="tip_close_sensor">关闭温湿度传感器</string>
+    <string name="tip_update_time_min">毫秒广播一次</string>
+    <string name="tip_close_acc_sensor">不启用加速度检测</string>
+    <string name="tip_mac_edit">Mac地址不可编辑</string>
+    <string name="connect_ok">密码正确</string>
+    <string name="connect_passwordError"> 密码错误，断开连接</string>
+    <string name="change_name_OK"> 设置名称成功</string>
+    <string name="change_name_fail"> 设置名称失败</string>
+
+    <string name="change_uuid_ok"> 设置UUID成功</string>
+
+    <string name="change_uuid_fail"> 设置UUID失败</string>
+    <string name="change_customer_ok"> 设置自定义数据成功</string>
+    <string name="change_customer_fail"> 设置自定义数据失败</string>
+    <string name="change_major_ok"> 设置Major成功</string>
+    <string name="change_major_fail"> 设置Major失败</string>
+    <string name="change_minor_ok"> 设置Minor成功</string>
+    <string name="change_minor_fail"> 设置Minor失败</string>
+    <string name="change_txpower_ok"> 设置发射功率成功</string>
+    <string name="change_txpower_fail"> 设置发射功率失败</string>
+    <string name="data_error">数据格式不对</string>
+    <string name="change_ok"> 设置成功</string>
+    <string name="change_adv">设置广播间隔成功</string>
+    <string name="change_rssi">设置RSSI at 1米 成功</string>
+    <string name="change_fail"> 设置失败</string>
+    <string name="pop_adv"> 使能动态广播间隔</string>
+    <string name="pop_temp"> 定时获取温湿度</string>
+    <string name="version">固件版本</string>
+    <string name="change_mode">切换模式</string>
+    <string name="check_password"> 密码验证</string>
+
+    <string name="change_password">修改密码</string>
+    <string name="setName"> 名称设置</string>
+    <string name="setUUID"> UUID设置</string>
+    <string name="setCustomer"> 自定义数据设置</string>
+    <string name="setMinor"> Minor值设置</string>
+    <string name="setMajor"> Major值设置</string>
+    <string name="setTxPower"> 发射功率设置</string>
+    <string name="setRssiAt1m">RSSI at 1米参考值</string>
+    <string name="setAdv">广播间隔设置</string>
+    <string name="bt">Battery Level:</string>
+    <string name="wendu">温度:</string>
+    <string name="shidu">湿度:</string>
+    <string name="file_tip">读取文件不对，请重新选择正确的目标文件</string>
+    <string-array name="eddystone_url_head">
+        <item>http://www.</item>
+        <item>https://www.</item>
+        <item>http://</item>
+        <item>https://</item>
+    </string-array>
+    <string-array name="spinner_dbm">
+        <item>4 dBm</item>
+        <item>0 dBm</item>
+        <item>-4 dBm</item>
+        <item>-8 dBm</item>
+        <item>-12 dBm</item>
+        <item>-16 dBm</item>
+        <item>-20 dBm</item>
+        <item>-40 dBm</item>
+    </string-array>
+    <string-array name="spinner_txpowerat0m">
+        <item>-10</item>
+        <item>-11</item>
+        <item>-12</item>
+        <item>-13</item>
+        <item>-14</item>
+        <item>-15</item>
+        <item>-16</item>
+        <item>-17</item>
+        <item>-18</item>
+        <item>-19</item>
+        <item>-20</item>
+        <item>-21</item>
+        <item>-22</item>
+        <item>-23</item>
+        <item>-24</item>
+        <item>-25</item>
+        <item>-26</item>
+        <item>-27</item>
+        <item>-28</item>
+        <item>-29</item>
+        <item>-30</item>
+        <item>-31</item>
+        <item>-32</item>
+        <item>-33</item>
+        <item>-34</item>
+        <item>-35</item>
+        <item>-36</item>
+        <item>-37</item>
+        <item>-38</item>
+        <item>-39</item>
+        <item>-40</item>
+        <item>-41</item>
+        <item>-42</item>
+        <item>-43</item>
+        <item>-44</item>
+        <item>-45</item>
+        <item>-46</item>
+        <item>-47</item>
+        <item>-48</item>
+        <item>-49</item>
+        <item>-50</item>
+        <item>-51</item>
+        <item>-52</item>
+        <item>-53</item>
+        <item>-54</item>
+        <item>-55</item>
+        <item>-56</item>
+        <item>-57</item>
+        <item>-58</item>
+        <item>-59</item>
+        <item>-60</item>
+    </string-array>
+    <string-array name="spinner_measure">
+        <item>-30</item>
+        <item>-31</item>
+        <item>-32</item>
+        <item>-33</item>
+        <item>-34</item>
+        <item>-35</item>
+        <item>-36</item>
+        <item>-37</item>
+        <item>-38</item>
+        <item>-39</item>
+        <item>-40</item>
+        <item>-41</item>
+        <item>-42</item>
+        <item>-43</item>
+        <item>-44</item>
+        <item>-45</item>
+        <item>-46</item>
+        <item>-47</item>
+        <item>-48</item>
+        <item>-49</item>
+        <item>-50</item>
+        <item>-51</item>
+        <item>-52</item>
+        <item>-53</item>
+        <item>-54</item>
+        <item>-55</item>
+        <item>-56</item>
+        <item>-57</item>
+        <item>-58</item>
+        <item>-59</item>
+        <item>-60</item>
+        <item>-61</item>
+        <item>-62</item>
+        <item>-63</item>
+        <item>-64</item>
+        <item>-65</item>
+        <item>-66</item>
+        <item>-67</item>
+        <item>-68</item>
+        <item>-69</item>
+        <item>-70</item>
+        <item>-71</item>
+        <item>-72</item>
+        <item>-73</item>
+        <item>-74</item>
+        <item>-75</item>
+        <item>-76</item>
+        <item>-77</item>
+        <item>-78</item>
+        <item>-79</item>
+        <item>-80</item>
+        <item>-81</item>
+        <item>-82</item>
+        <item>-83</item>
+        <item>-84</item>
+        <item>-85</item>
+        <item>-86</item>
+        <item>-87</item>
+        <item>-88</item>
+        <item>-89</item>
+        <item>-90</item>
+        <item>-91</item>
+        <item>-92</item>
+        <item>-93</item>
+        <item>-94</item>
+        <item>-95</item>
+        <item>-96</item>
+        <item>-97</item>
+        <item>-98</item>
+        <item>-99</item>
+        <item>-100</item>
+
+
+
+    </string-array>
+    <string-array name="spinner_adv">
+        <item>20 ms</item>
+        <item>30 ms</item>
+        <item>50 ms</item>
+        <item>100 ms</item>
+        <item>200 ms</item>
+        <item>300 ms</item>
+        <item>400 ms</item>
+        <item>500 ms</item>
+        <item>600 ms</item>
+        <item>700 ms</item>
+        <item>800 ms</item>
+        <item>900 ms</item>
+        <item>1000 ms</item>
+
+    </string-array>
+
+    <string-array name="spinner_adv_0nterval">
+
+        <item>100 ms</item>
+        <item>200 ms</item>
+        <item>300 ms</item>
+        <item>400 ms</item>
+        <item>500 ms</item>
+        <item>600 ms</item>
+        <item>700 ms</item>
+        <item>800 ms</item>
+        <item>900 ms</item>
+        <item>1000 ms</item>
+        <item>1500 ms</item>
+        <item>2000 ms</item>
+        <item>2500 ms</item>
+        <item>3000 ms</item>
+        <item>5000 ms</item>
+        <item>10000 ms</item>
+
+    </string-array>
+    <string-array name="spinner_check">
+        <item>3 秒</item>
+        <item>5 秒</item>
+        <item>10 秒</item>
+        <item>15 秒</item>
+        <item>30 秒</item>
+        <item>50 秒</item>
+        <item>100 秒</item>
+        <item>200 秒</item>
+        <item>300 秒</item>
+    </string-array>
+</resources>

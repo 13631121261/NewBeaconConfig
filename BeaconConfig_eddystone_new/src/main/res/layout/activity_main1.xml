@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape"
+    android:orientation="vertical"
+    tools:context="com.ble.activity.MainActivity">
+
+<RelativeLayout
+    android:id="@+id/relat_gps"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="#ff0000">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/noGps"
+        android:textColor="#ffffff"
+        android:textStyle="bold"></TextView>
+    <TextView
+        android:id="@+id/openGps"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="@string/open"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        ></TextView>
+</RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/relat_ble"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ff0000">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/noBle"
+            android:textColor="#ffffff"
+            android:textStyle="bold"></TextView>
+        <TextView
+            android:id="@+id/openBle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/open"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            ></TextView>
+    </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/framelayout"
+        android:onClick="onClick"
+        android:background="@drawable/shape"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="OnClick">
+        <LinearLayout
+            android:id="@+id/linear_background"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/shape"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@mipmap/ble" />
+
+            <TextView
+                android:id="@+id/txt_noDevice"
+                android:layout_width="match_parent"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_height="50dp"
+                android:text="@string/no_device"/>
+        </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="?attr/actionBarSize"
+        android:background="@drawable/shape"
+        android:layout_height="wrap_content"/>
+
+        <com.ble.view_sw.MyFilterView
+            android:id="@+id/myFilterView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        />
+</FrameLayout>
+</LinearLayout>
