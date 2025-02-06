@@ -17,7 +17,6 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.view.View
-import android.webkit.WebSettings
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -44,177 +43,96 @@ import java.util.UUID
 class MainActivity : AppCompatActivity() {
     private var mVideoView: VideoView? = null
     private var mImageView: ImageView? = null
-
-
-
-
- //   private val host="http://47.112.223.35:8008"
- private val host="http://192.168.1.14:8008"
-
-
-
-
-    // 假设我们有若干随机链接，这里仅示例写死
+    private val host = "http://192.168.1.14:8008"
     private var randomLinks: MutableList<String> = ArrayList()
-
-    // 记录已下载到本地的媒体文件路径
     private val mediaPathList: MutableList<String> = ArrayList()
-
-    // 当前播放的媒体索引
     private var currentIndex = 0
-
-    // 用于控制图片的切换时机（10秒后切换），或者视频播放完毕后切换
     private val mHandler = Handler(Looper.getMainLooper())
-
-    // 用于延迟切换到下一个媒体的 Runnable
     private val nextMediaRunnable = Runnable { playNextMedia() }
+    private var url: String = ""
+    private var sp: SharedPreferences? = null
 
-     var url:String="";
-
-    var sp: SharedPreferences?=null;
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        mVideoView = findViewById<VideoView>(R.id.video_view)
-        mImageView = findViewById<ImageView>(R.id.image_view)
-        sp=getSharedPreferences("zhihong_tv",0)
-         url= sp?.getString("url","").toString();
-        var serial=sp?.getString("serial","")
-        if (!serial.equals("")) {
-                checkAndRequestPermissions()
-        }
-        else {
+        mVideoView = findViewById(R.id.video_view)
+        mImageView = findViewById(R.id.image_view)
+        sp = getSharedPreferences("zhihong_tv", 0)
+        url = sp?.getString("url", "").toString()
+        val serial = sp?.getString("serial", "")
+
+        if (!serial.isNullOrEmpty()) {
+            checkAndRequestPermissions()
+        } else {
             showDialog()
         }
     }
 
     override fun onPause() {
         super.onPause()
-        finish();
+        finish()
     }
-    fun showDialog(){
-        val view: View = layoutInflater.inflate(R.layout.half_dialog_view, null)
-        val editText = view.findViewById<View>(R.id.editTextText) as EditText
-        val dialog: AlertDialog = AlertDialog.Builder(this)
 
-            .setTitle("输入唯一序号") //设置对话框的标题
+    private fun showDialog() {
+        val view: View = layoutInflater.inflate(R.layout.half_dialog_view, null)
+        val editText = view.findViewById<EditText>(R.id.editTextText)
+        val dialog: AlertDialog = AlertDialog.Builder(this)
+            .setTitle("输入唯一序号")
             .setView(view)
-            .setNegativeButton("取消",
-                DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
-            .setPositiveButton("确定", DialogInterface.OnClickListener { dialog, which ->
+            .setNegativeButton("取消") { dialog, _ -> dialog.dismiss() }
+            .setPositiveButton("确定") { dialog, _ ->
                 val id = editText.text.toString()
                 Toast.makeText(this@MainActivity, id, Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
-                 url=host+"/Api/getAll?id="+id;
-                sp?.edit()?.putString("url",url)?.apply();
+                url = "$host/Api/getAll?id=$id"
+                sp?.edit()?.putString("url", url)?.apply()
                 getUrl(url)
-            }).create()
+            }.create()
         dialog.show()
     }
-    fun getUrl(url:String){
+
+    private fun getUrl(url: String) {
         val client = OkHttpClient()
-        val request: Request = Request.Builder()
-            .url(url)
-            .build()
-      /*  val request: Request = Request.Builder()
-            .url(host+"/Api/getAll?id="+id)
-            .build()*/
+        val request: Request = Request.Builder().url(url).build()
         client.newCall(request).enqueue(object : Callback {
             @SuppressLint("SuspiciousIndentation")
-            override  fun onResponse(call: Call, response: Response) {
-
-                var json= JSONObject(String((response.body?.bytes()!!)))
-                if(json!=null){
-                    if(json.getInt("code")==1){
-                        var data=json.getJSONArray("data");
-                        runOnUiThread {
-                            mediaPathList.clear();
-                            val serial=UUID.randomUUID().toString()
-                            sp?.edit()?.putString("serial",serial)?.apply()
-                            for (inex in 0 ..data.length()-1){
-                                println("具体链接="+host+"/Api/download?path="+data.getJSONObject(inex).getString("url")+"&serial="+serial+"&type="+data.getJSONObject(inex).getInt("type"))
-                                randomLinks.add(host+"/Api/download?path="+data.getJSONObject(inex).getString("url")+"&serial="+serial+"&type="+data.getJSONObject(inex).getInt("type"))
-                                downloadFile((host+"/Api/download?path="+data.getJSONObject(inex).getString("url")+"&serial="+serial+"&type="+data.getJSONObject(inex).getInt("type")))
-                            }
+            override fun onResponse(call: Call, response: Response) {
+                val json = JSONObject(String(response.body?.bytes()!!))
+                if (json != null && json.getInt("code") == 1) {
+                    val data = json.getJSONArray("data")
+                    runOnUiThread {
+                        mediaPathList.clear()
+                        val serial = UUID.randomUUID().toString()
+                        sp?.edit()?.putString("serial", serial)?.apply()
+                        for (i in 0 until data.length()) {
+                            val downloadUrl = "$host/Api/download?path=${data.getJSONObject(i).getString("url")}&serial=$serial&type=${data.getJSONObject(i).getInt("type")}"
+                            randomLinks.add(downloadUrl)
+                            downloadFile(downloadUrl)
                         }
-
+                        checkLocalFilesAndUpdate()
                     }
                 }
-
             }
 
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
             }
-
-
-
         })
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * 检查并申请权限
-     */
     @RequiresApi(Build.VERSION_CODES.R)
     private fun checkAndRequestPermissions() {
-     /*   if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            println("没有权限，请求权限")*/
-           /* ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                REQUEST_PERMISSION_CODE
-            )*/
-            if (    !Environment.isExternalStorageManager() ) {
-                //如果没有权限，获取权限{
-                val intent: Intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-                intent.setData(Uri.parse("package:" + getPackageName()));
-                startActivity(intent);
-            } else {
-                println(" 已有权限，初始化媒体列表")
-                // 已有权限，初始化媒体列表
-                initMediaListAndPlay()
-            }
-       // }
-    }
-
-    /**
-     * 权限请求回调
-     */
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_PERMISSION_CODE) {
-            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                initMediaListAndPlay()
-            } else {
-                // 权限被拒绝，可做相应处理
-            }
+        if (!Environment.isExternalStorageManager()) {
+            val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                .setData(Uri.parse("package:${packageName}"))
+            startActivity(intent)
+        } else {
+            initMediaListAndPlay()
         }
     }
 
-    /**
-     * 下载文件（示例：HttpURLConnection）
-     */
     private fun downloadFile(fileUrl: String) {
-        println("下载地址="+fileUrl)
         Thread {
             var bis: BufferedInputStream? = null
             var fos: FileOutputStream? = null
@@ -228,10 +146,9 @@ class MainActivity : AppCompatActivity() {
                 conn.connect()
 
                 if (conn.responseCode == HttpURLConnection.HTTP_OK) {
-                    // 文件名可通过时间戳或链接后缀来区分
-                    val fileName =fileUrl+ getFileExtensionFromUrl(fileUrl)
-                    val storageDir: File? =
-                        getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+                    // 获取文件名
+                    val fileName = fileUrl + getFileExtensionFromUrl(fileUrl)
+                    val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
                     if (storageDir != null && !storageDir.exists()) {
                         storageDir.mkdirs()
                     }
@@ -246,8 +163,7 @@ class MainActivity : AppCompatActivity() {
                         fos.write(buffer, 0, len)
                     }
                     fos.flush()
-                    // 下载完成后更新轮播列表
-                    runOnUiThread(Runnable { initMediaListAndPlay() })
+                    runOnUiThread { initMediaListAndPlay() }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -263,21 +179,14 @@ class MainActivity : AppCompatActivity() {
         }.start()
     }
 
-    /**
-     * 根据 url 简单判断文件后缀
-     */
     private fun getFileExtensionFromUrl(url: String): String {
-        if (url.contains("type=1")) {
-            return ".jpg"
-        } else if (url.contains("type=2")) {
-            return ".mp4"
+        return when {
+            url.contains("type=1") -> ".jpg"
+            url.contains("type=2") -> ".mp4"
+            else -> ""
         }
-        return ""
     }
 
-    /**
-     * 初始化本地媒体列表，并开始播放
-     */
     private fun initMediaListAndPlay() {
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
         if (storageDir == null || !storageDir.exists()) {
@@ -285,16 +194,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         val files = storageDir.listFiles()
-        if (files == null || files.size == 0) {
+        if (files == null || files.isEmpty()) {
             return
         }
-        println("有多少个文件="+files.size)
+
         mediaPathList.clear()
         for (f in files) {
-            if (f.name.endsWith(".mp4")
-                || f.name.endsWith(".jpg")
-                || f.name.endsWith(".png")
-            ) {
+            if (f.name.endsWith(".mp4") || f.name.endsWith(".jpg") || f.name.endsWith(".png")) {
                 mediaPathList.add(f.absolutePath)
             }
         }
@@ -303,65 +209,63 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        // 从第 0 个开始播放
         currentIndex = 0
         playMediaAtIndex(currentIndex)
     }
 
-    /**
-     * 根据索引播放媒体
-     * - 如果是视频，则等视频播完后再切换到下一个
-     * - 如果是图片，则展示 10 秒后切换
-     */
     private fun playMediaAtIndex(index: Int) {
-        println("播放第几个媒体="+index)
         if (mediaPathList.isEmpty()) return
         val path = mediaPathList[index]
 
-        // 先停止之前的播放或回调，避免重复
         mHandler.removeCallbacks(nextMediaRunnable)
         mVideoView!!.stopPlayback()
 
         if (path.endsWith(".mp4")) {
-            // 播放视频
             mImageView!!.visibility = View.GONE
             mVideoView!!.visibility = View.VISIBLE
-
             mVideoView!!.setVideoURI(Uri.fromFile(File(path)))
             mVideoView!!.start()
-
-            // 视频播放完成后切到下一个媒体
             mVideoView!!.setOnCompletionListener { playNextMedia() }
         } else {
-            // 显示图片
             mVideoView!!.visibility = View.GONE
             mImageView!!.visibility = View.VISIBLE
-
             val bitmap = BitmapFactory.decodeFile(path)
             mImageView!!.setImageBitmap(bitmap)
-
-            // 10 秒后切到下一个媒体
-            mHandler.postDelayed(nextMediaRunnable, 5000)
         }
+
+        mHandler.postDelayed(nextMediaRunnable, 5000)
     }
 
-    /**
-     * 切换到下一个媒体
-     */
     private fun playNextMedia() {
-        if (mediaPathList.isEmpty()) return
-        currentIndex = (currentIndex + 1) % mediaPathList.size
+        currentIndex++
+        if (currentIndex >= mediaPathList.size) {
+            currentIndex = 0
+        }
         playMediaAtIndex(currentIndex)
     }
 
-    protected override fun onDestroy() {
-        super.onDestroy()
-        // 清理回调，避免内存泄漏
-        mHandler.removeCallbacks(nextMediaRunnable)
-        mVideoView!!.stopPlayback()
-    }
+    private fun checkLocalFilesAndUpdate() {
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+        if (storageDir == null || !storageDir.exists()) {
+            return
+        }
 
-    companion object {
-        private const val REQUEST_PERMISSION_CODE = 100
+        val files = storageDir.listFiles()
+        val fileNamesInLocal = files?.map { it.name } ?: emptyList()
+
+        // 删除本地不在 URL 列表中的文件
+        files?.forEach {
+            if (!randomLinks.any { url -> it.name in url }) {
+                it.delete()
+            }
+        }
+
+        // 下载 URL 中没有的文件
+        randomLinks.forEach { url ->
+            val fileName = url.substringAfterLast("=")
+            if (fileNamesInLocal.none { it == fileName }) {
+                downloadFile(url)
+            }
+        }
     }
 }
