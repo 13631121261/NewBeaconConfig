@@ -1,13 +1,8 @@
 package com.ble.newbeaconconfig
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
@@ -16,256 +11,297 @@ import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.view.KeyEvent
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import android.widget.VideoView
-import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
+import okhttp3.*
 import org.json.JSONObject
-import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.net.HttpURLConnection
-import java.net.URL
-import java.util.UUID
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    private var mVideoView: VideoView? = null
-    private var mImageView: ImageView? = null
-    private val host = "http://192.168.1.14:8008"
-    private var randomLinks: MutableList<String> = ArrayList()
-    private val mediaPathList: MutableList<String> = ArrayList()
-    private var currentIndex = 0
-    private val mHandler = Handler(Looper.getMainLooper())
-    private val nextMediaRunnable = Runnable { playNextMedia() }
-    private var url: String = ""
-    private var sp: SharedPreferences? = null
+    private var userID: String? = null
+    private var localFilePath = ""
 
-    @RequiresApi(Build.VERSION_CODES.R)
+    private val mediaFiles: MutableSet<String> = HashSet()
+    private var currentMediaIndex = 0
+    private val handler = Handler(Looper.getMainLooper())
+    private var imageView: ImageView? = null
+    private var videoView: VideoView? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        mVideoView = findViewById(R.id.video_view)
-        mImageView = findViewById(R.id.image_view)
-        sp = getSharedPreferences("zhihong_tv", 0)
-        url = sp?.getString("url", "").toString()
-        val serial = sp?.getString("serial", "")
+        setContentView(R.layout.activity_main2)
+        val preferences = getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE)
+        imageView = findViewById(R.id.imageView)
+        videoView = findViewById(R.id.videoView)
 
-        if (!serial.isNullOrEmpty()) {
-            checkAndRequestPermissions()
+        userID = preferences.getString(KEY_USER_ID, null)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (!Environment.isExternalStorageManager()) {
+                val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                intent.data = Uri.parse("package:$packageName")
+                startActivity(intent)
+            }
+        }
+
+        localFilePath = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).toString() + "/media"
+        if (!File(localFilePath).exists()) {
+            File(localFilePath).mkdirs()
+        }
+
+        scanLocalFiles() // 启动时先扫描本地文件
+
+        if (userID == null) {
+            showIDInputDialog()
         } else {
-            showDialog()
+            fetchDataAndDownload()
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        finish()
+    private fun showIDInputDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Enter ID")
+
+        val input = EditText(this)
+        builder.setView(input)
+
+        builder.setPositiveButton("OK") { _, _ ->
+            userID = input.text.toString().trim()
+            if (!userID.isNullOrEmpty()) {
+                val editor = getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE).edit()
+                editor.putString(KEY_USER_ID, userID)
+                editor.apply()
+                fetchDataAndDownload()
+            } else {
+                Toast.makeText(this, "ID cannot be empty", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.dismiss()
+            finish()
+        }
+
+        builder.show()
     }
 
-    private fun showDialog() {
-        val view: View = layoutInflater.inflate(R.layout.half_dialog_view, null)
-        val editText = view.findViewById<EditText>(R.id.editTextText)
-        val dialog: AlertDialog = AlertDialog.Builder(this)
-            .setTitle("输入唯一序号")
-            .setView(view)
-            .setNegativeButton("取消") { dialog, _ -> dialog.dismiss() }
-            .setPositiveButton("确定") { dialog, _ ->
-                val id = editText.text.toString()
-                Toast.makeText(this@MainActivity, id, Toast.LENGTH_SHORT).show()
-                dialog.dismiss()
-                url = "$host/Api/getAll?id=$id"
-                sp?.edit()?.putString("url", url)?.apply()
-                getUrl(url)
-            }.create()
-        dialog.show()
-    }
-
-    private fun getUrl(url: String) {
+    private fun fetchDataAndDownload() {
         val client = OkHttpClient()
-        val request: Request = Request.Builder().url(url).build()
+        val request: Request = Request.Builder()
+            .url("$downloadUrl$userID")
+            .build()
+
         client.newCall(request).enqueue(object : Callback {
-            @SuppressLint("SuspiciousIndentation")
-            override fun onResponse(call: Call, response: Response) {
-                val json = JSONObject(String(response.body?.bytes()!!))
-                if (json != null && json.getInt("code") == 1) {
-                    val data = json.getJSONArray("data")
-                    runOnUiThread {
-                        mediaPathList.clear()
-                        val serial = UUID.randomUUID().toString()
-                        sp?.edit()?.putString("serial", serial)?.apply()
-                        for (i in 0 until data.length()) {
-                            val downloadUrl = "$host/Api/download?path=${data.getJSONObject(i).getString("url")}&serial=$serial&type=${data.getJSONObject(i).getInt("type")}"
-                            randomLinks.add(downloadUrl)
-                            downloadFile(downloadUrl)
-                        }
-                        checkLocalFilesAndUpdate()
-                    }
+            override fun onFailure(call: Call, e: IOException) {
+                runOnUiThread {
+                    Toast.makeText(this@MainActivity, "Failed to fetch data", Toast.LENGTH_SHORT).show()
+                    scanLocalFiles() // 失败时扫描本地文件
+                    startPollingFiles()
                 }
             }
 
-            override fun onFailure(call: Call, e: IOException) {
-                e.printStackTrace()
+            override fun onResponse(call: Call, response: Response) {
+                try {
+                    val json = response.body!!.string()
+                    val jsonObject = JSONObject(json)
+                    println("API Response: $json")
+
+                    if (jsonObject.getInt("code") == 1) {
+                        val data = jsonObject.getJSONArray("data")
+                        val validFileNames: MutableSet<String> = HashSet()
+
+                        for (i in 0 until data.length()) {
+                            val item = data.getJSONObject(i)
+                            val used = item.getInt("used")
+                            val url = item.getString("url")
+                            val type = item.getInt("type")
+                            val fileName = url + if (type == 1) ".jpg" else ".mp4"
+
+                            if (used == 1) {
+                                validFileNames.add(fileName)
+                                val file = File(localFilePath, fileName)
+                                if (!file.exists()) {
+                                    println("需要下载")
+                                    downloadFile(url, fileName, type)
+                                }
+                                mediaFiles.add(file.path)
+                            } else {
+                                val file = File(localFilePath, fileName)
+                                if (file.exists()) {
+                                    file.delete()
+                                }
+                            }
+                        }
+
+                        deleteInvalidFiles(validFileNames)
+                        startPollingFiles()
+                    } else {
+                        scanLocalFiles()
+                        startPollingFiles()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    runOnUiThread {
+                        Toast.makeText(this@MainActivity, "Failed to parse data", Toast.LENGTH_SHORT).show()
+                    }
+                    scanLocalFiles()
+                    startPollingFiles()
+                }
             }
         })
     }
 
-    @RequiresApi(Build.VERSION_CODES.R)
-    private fun checkAndRequestPermissions() {
-        if (!Environment.isExternalStorageManager()) {
-            val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
-                .setData(Uri.parse("package:${packageName}"))
-            startActivity(intent)
-        } else {
-            initMediaListAndPlay()
+    private fun downloadFile(url: String, fileName: String, type: Int) {
+        val preferences = getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE)
+        var serial = preferences.getString("serial", null);
+        if (serial.isNullOrEmpty()) {
+            serial = UUID.randomUUID().toString()
+            preferences.edit().putString("serial", serial).apply()
         }
-    }
+        val downloadUrl = "http://192.168.1.14:8008/Api/download?path=$url&type=$type&serial=$serial"
 
-    private fun downloadFile(fileUrl: String) {
-        Thread {
-            var bis: BufferedInputStream? = null
-            var fos: FileOutputStream? = null
-            var conn: HttpURLConnection? = null
-            try {
-                val url = URL(fileUrl)
-                conn = url.openConnection() as HttpURLConnection
-                conn.connectTimeout = 5000
-                conn.readTimeout = 5000
-                conn.doInput = true
-                conn.connect()
-
-                if (conn.responseCode == HttpURLConnection.HTTP_OK) {
-                    // 获取文件名
-                    val fileName = fileUrl + getFileExtensionFromUrl(fileUrl)
-                    val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
-                    if (storageDir != null && !storageDir.exists()) {
-                        storageDir.mkdirs()
-                    }
-                    val outFile = File(storageDir, fileName)
-
-                    bis = BufferedInputStream(conn.inputStream)
-                    fos = FileOutputStream(outFile)
-
-                    val buffer = ByteArray(1024)
-                    var len: Int
-                    while ((bis.read(buffer).also { len = it }) != -1) {
-                        fos.write(buffer, 0, len)
-                    }
-                    fos.flush()
-                    runOnUiThread { initMediaListAndPlay() }
+        val client = OkHttpClient()
+        val request = Request.Builder().url(downloadUrl).build()
+        println("下载的文件地址=" + downloadUrl)
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                runOnUiThread {
+                    Toast.makeText(this@MainActivity, "Failed to download file", Toast.LENGTH_SHORT).show()
+                    scanLocalFiles()
+                    startPollingFiles()
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            } finally {
+            }
+
+            override fun onResponse(call: Call, response: Response) {
                 try {
-                    bis?.close()
-                    fos?.close()
-                    conn?.disconnect()
-                } catch (ex: Exception) {
-                    ex.printStackTrace()
+                    val file = File(localFilePath, fileName)
+                    FileOutputStream(file).use { fos ->
+                        val buffer = ByteArray(1024)
+                        val inputStream = response.body!!.byteStream()
+                        var len: Int
+                        while (inputStream.read(buffer).also { len = it } != -1) {
+                            fos.write(buffer, 0, len)
+                        }
+                        fos.flush()
+                    }
+                    println("下载完成=" + file.path)
+                    println("run=" + run)
+                    mediaFiles.add(file.path)
+                    if(run==0||mediaFiles.size==1){
+                        println("启动播放")
+                        startPollingFiles()
+                    }
+
+                } catch (e: IOException) {
+                    e.printStackTrace()
                 }
             }
-        }.start()
+        })
     }
 
-    private fun getFileExtensionFromUrl(url: String): String {
-        return when {
-            url.contains("type=1") -> ".jpg"
-            url.contains("type=2") -> ".mp4"
-            else -> ""
-        }
-    }
-
-    private fun initMediaListAndPlay() {
-        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
-        if (storageDir == null || !storageDir.exists()) {
-            return
-        }
-
-        val files = storageDir.listFiles()
-        if (files == null || files.isEmpty()) {
-            return
-        }
-
-        mediaPathList.clear()
-        for (f in files) {
-            if (f.name.endsWith(".mp4") || f.name.endsWith(".jpg") || f.name.endsWith(".png")) {
-                mediaPathList.add(f.absolutePath)
+    private fun scanLocalFiles() {
+        val directory = File(localFilePath)
+        if (directory.exists() && directory.isDirectory) {
+            val files = directory.listFiles { file ->
+                file.extension.equals("jpg", ignoreCase = true) ||
+                        file.extension.equals("mp4", ignoreCase = true)
             }
-        }
-
-        if (mediaPathList.isEmpty()) {
-            return
-        }
-
-        currentIndex = 0
-        playMediaAtIndex(currentIndex)
-    }
-
-    private fun playMediaAtIndex(index: Int) {
-        if (mediaPathList.isEmpty()) return
-        val path = mediaPathList[index]
-
-        mHandler.removeCallbacks(nextMediaRunnable)
-        mVideoView!!.stopPlayback()
-
-        if (path.endsWith(".mp4")) {
-            mImageView!!.visibility = View.GONE
-            mVideoView!!.visibility = View.VISIBLE
-            mVideoView!!.setVideoURI(Uri.fromFile(File(path)))
-            mVideoView!!.start()
-            mVideoView!!.setOnCompletionListener { playNextMedia() }
-        } else {
-            mVideoView!!.visibility = View.GONE
-            mImageView!!.visibility = View.VISIBLE
-            val bitmap = BitmapFactory.decodeFile(path)
-            mImageView!!.setImageBitmap(bitmap)
-        }
-
-        mHandler.postDelayed(nextMediaRunnable, 5000)
-    }
-
-    private fun playNextMedia() {
-        currentIndex++
-        if (currentIndex >= mediaPathList.size) {
-            currentIndex = 0
-        }
-        playMediaAtIndex(currentIndex)
-    }
-
-    private fun checkLocalFilesAndUpdate() {
-        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
-        if (storageDir == null || !storageDir.exists()) {
-            return
-        }
-
-        val files = storageDir.listFiles()
-        val fileNamesInLocal = files?.map { it.name } ?: emptyList()
-
-        // 删除本地不在 URL 列表中的文件
-        files?.forEach {
-            if (!randomLinks.any { url -> it.name in url }) {
-                it.delete()
-            }
-        }
-
-        // 下载 URL 中没有的文件
-        randomLinks.forEach { url ->
-            val fileName = url.substringAfterLast("=")
-            if (fileNamesInLocal.none { it == fileName }) {
-                downloadFile(url)
+            files?.forEach { file ->
+                mediaFiles.add(file.path)
+                println("本地问价名=" + file.path)
             }
         }
     }
+
+    private fun deleteInvalidFiles(validFileNames: Set<String>) {
+        val directory = File(localFilePath)
+        if (directory.exists() && directory.isDirectory) {
+            directory.listFiles()?.forEach { file ->
+                if (!validFileNames.contains(file.name)) {
+                    println("Deleting invalid file: ${file.name}")
+                    file.delete()
+                }
+            }
+        }
+    }
+var run=0;
+    private fun startPollingFiles() {
+            runOnUiThread {
+
+                if (mediaFiles.isNotEmpty()) {
+
+                    println("资源长度="+mediaFiles.size)
+                    val currentFile = mediaFiles.elementAt(currentMediaIndex)
+                    displayMedia(currentFile)
+                    currentMediaIndex = (currentMediaIndex + 1) % mediaFiles.size
+
+            } }
+
+
+    }
+
+    private fun displayMedia(filePath: String) {
+        val file = File(filePath)
+        if (file.exists()) {
+            run=1;
+            val fileExtension = file.extension
+            if (fileExtension.equals("jpg", ignoreCase = true)) {
+                imageView!!.visibility = View.VISIBLE
+                videoView!!.visibility = View.GONE
+                imageView!!.setImageBitmap(BitmapFactory.decodeFile(file.path))
+                handler.postDelayed(object : Runnable {
+                    override fun run() {
+                        startPollingFiles()
+                    }
+                },5000)
+
+            } else if (fileExtension.equals("mp4", ignoreCase = true)) {
+                imageView!!.visibility = View.GONE
+                videoView!!.visibility = View.VISIBLE
+                videoView!!.setVideoURI(Uri.fromFile(file))
+                videoView!!.start()
+
+                videoView!!.setOnCompletionListener {
+                    // 视频播放完毕后切换到下一张图片
+                    startPollingFiles()
+                }
+            }
+        }
+    }
+
+    companion object {
+        private const val PREFERENCES_NAME = "AppPreferences"
+        private const val KEY_USER_ID = "userId"
+        private const val downloadUrl = "http://192.168.1.14:8008/Api/getAll?id="
+    }
+var firstTime:Long?=0;
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (event != null) {
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+                var secondTime = System.currentTimeMillis();
+                if (secondTime- firstTime!! > 2000) {
+                    Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                    firstTime = secondTime
+                    return true;
+                } else {
+                    finish(); // 调用finish()方法，结束当前Activity
+                    System.exit(0); // 强制退出应用
+                }
+            }
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+
+
 }
