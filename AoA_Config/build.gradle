@@ -10,7 +10,7 @@ android {
         enabled = true
     }
     defaultConfig {
-        applicationId "com.ble.beaconconfig"
+        applicationId "com.ble.beaconconfig_aoa"
         minSdk 21
         targetSdk 34
         versionCode 10
